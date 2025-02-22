@@ -22,6 +22,7 @@ object RwReferenceSpec : FunSpec({
             date shouldBeEqualTo "Dec 24"
             title shouldBeEqualTo "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
             "Adults in China: A Prospective Cohort Study"
+            journal shouldBeEqualTo "J Gerontol A Biol Sci Med Sci"
         }
 
         rawRef.toRisRecord().run {
@@ -33,6 +34,7 @@ object RwReferenceSpec : FunSpec({
             date shouldBeEqualTo "Dec 24"
             title shouldBeEqualTo "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
                 "Adults in China: A Prospective Cohort Study"
+            periodicalNameFullFormatJO shouldBeEqualTo "J Gerontol A Biol Sci Med Sci"
         }
     }
 })

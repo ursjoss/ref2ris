@@ -11,6 +11,7 @@ internal data class RawReference(
     val publicationYear: String,
     val date: String?,
     val title: String,
+    val journal: String,
 ) {
 
     companion object {
@@ -21,8 +22,8 @@ internal data class RawReference(
             val date = dateRegex.find(textLine)?.groupValues?.get(1)
             val remainder = textLine.split("). ").drop(1).joinToString("). ")
             val parts = remainder.split(". ")
-            val title = parts.first()
-            return RawReference(textLine, authors, year, date, title)
+            val (title, journal, _) = parts
+            return RawReference(textLine, authors, year, date, title, journal)
         }
     }
 }
@@ -44,5 +45,6 @@ internal fun RawReference.toRisRecord(): RisRecord {
         publicationYear = rr.publicationYear
         date = rr.date
         title = rr.title
+        periodicalNameFullFormatJO = rr.journal
     }
 }
