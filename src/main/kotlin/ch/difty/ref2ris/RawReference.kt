@@ -12,6 +12,7 @@ internal data class RawReference(
     val date: String?,
     val title: String,
     val journal: String,
+    val doi: String?,
 ) {
 
     companion object {
@@ -20,10 +21,13 @@ internal data class RawReference(
             val authors = textLine.substringBefore(" (")
             val year = textLine.drop(authors.length + 2).substringBefore(", ")
             val date = dateRegex.find(textLine)?.groupValues?.get(1)
-            val remainder = textLine.split("). ").drop(1).joinToString("). ")
-            val parts = remainder.split(". ")
+            val afterYearAndDate = textLine.split("). ").drop(1).joinToString("). ")
+            val parts = afterYearAndDate.split(". ")
             val (title, journal, _) = parts
-            return RawReference(textLine, authors, year, date, title, journal)
+            val indexOfJournal = afterYearAndDate.indexOf(journal)
+            val afterJournal = afterYearAndDate.drop(indexOfJournal + journal.length + 2)
+            val doi = afterJournal.takeIf { "doi" in it }
+            return RawReference(textLine, authors, year, date, title, journal, doi)
         }
     }
 }
@@ -46,5 +50,6 @@ internal fun RawReference.toRisRecord(): RisRecord {
         date = rr.date
         title = rr.title
         periodicalNameFullFormatJO = rr.journal
+        doi = rr.doi
     }
 }

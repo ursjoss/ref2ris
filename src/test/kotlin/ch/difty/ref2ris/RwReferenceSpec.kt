@@ -57,6 +57,7 @@ object RwReferenceSpec : FunSpec({
             title shouldBeEqualTo "Short-term exposure to warm-season ozone, cardiovascular mortality, " +
                 "and novel high-risk populations: A nationwide time-stratified case-crossover study"
             periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Environment, 345, 121031"
+            doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.atmosenv.2025.121031"
         }
     }
 })
