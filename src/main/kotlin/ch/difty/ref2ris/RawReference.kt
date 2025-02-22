@@ -18,11 +18,13 @@ internal data class RawReference(
 ) {
 
     companion object {
-        private val dateRegex = Regex("""\(\d{4}, ([^)]+)\)""")
+        private val dateRegex = Regex("""(\d{4})(?:, ([^)]+))?\)""")
         fun fromTextLine(textLine: String): RawReference {
             val authors = textLine.substringBefore(" (")
-            val year = textLine.drop(authors.length + 2).substringBefore(", ")
-            val date = dateRegex.find(textLine)?.groupValues?.get(1)
+            val startingWithYear = textLine.drop(authors.length + 2)
+            val yearAndOptionallyDate = dateRegex.find(startingWithYear)
+            val year = yearAndOptionallyDate?.groupValues?.get(1) ?: error("Unable to get year from $textLine")
+            val date = yearAndOptionallyDate.groupValues[2]
             val afterYearAndDate = textLine.split("). ").drop(1).joinToString("). ")
             val partsAfterYearAndDate = afterYearAndDate.split(". ")
             val (title, journalWithVolumeNumberAndArticleNumber, _) = partsAfterYearAndDate

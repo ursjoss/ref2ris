@@ -8,7 +8,7 @@ import org.amshove.kluent.shouldContainAll
 
 object RwReferenceSpec : FunSpec({
 
-    test("case 1") {
+    test("1. simple case") {
         val ref = "Zhu, A., Kan, H., Shi, X., Zeng, Y., & Ji, J. S. (2024, Dec 24). " +
             "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
             "Adults in China: A Prospective Cohort Study. J Gerontol A Biol Sci Med Sci. " +
@@ -39,7 +39,7 @@ object RwReferenceSpec : FunSpec({
     }
 
 
-    test("case 2") {
+    test("2. with DOI") {
         val ref = "Ahn, S., Yun, H., Oh, J., Kim, S., Jang, H., Kim, Y., Kang, C., Ahn, S., Kim, A., " +
             "Kwon, D., Park, J., Song, I., Moon, J., Kim, E., Min, J., Kim, H., & Lee, W. (2025, 2025/03/05/). " +
             "Short-term exposure to warm-season ozone, cardiovascular mortality, and novel high-risk populations: " +
@@ -63,7 +63,7 @@ object RwReferenceSpec : FunSpec({
         }
     }
 
-    test("case 3") {
+    test("3. with volume with parenthesis") {
         val ref = "Renzetti, S., Volta, M., van Thriel, C., Lucchini, R. G., Smith, D. R., Patrono, " +
             "A., Cagna, G., Invernizzi, A., Rechtman, E., Ongaro, E., De Angelis, E., Calza, S., Rota, M., " +
             "Wright, R. O., Claus Henn, B., Horton, M. K., & Placidi, D. (2025, 2025/02/01/). " +
@@ -85,6 +85,27 @@ object RwReferenceSpec : FunSpec({
             volumeNumber shouldBeEqualTo "16(2)"
             reviewedItem shouldBeEqualTo "102391"
             doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
+        }
+    }
+
+    test("4. with no date") {
+        val ref = "Zhang, X., Xi, Z., Yang, M., Zhang, X., Wu, R., Li, S., Pan, L., Fang, Y., Lv, P., Ma, Y., Duan, " +
+            "H., Wang, B., & Lv, K. (2025). Short-term effects of combined environmental factors on respiratory " +
+            "disease mortality in Qingdao city: A time-series investigation. PLoS One, 20(1), e0318250. " +
+            "https://doi.org/10.1371/journal.pone.0318250"
+        RawReference.fromTextLine(ref).toRisRecord().run {
+            type shouldBe RisType.JOUR
+            authors shouldBeEqualTo listOf("Zhang, X.", "Xi, Z.", "Yang, M.", "Zhang, X.", "Wu, R.", "Li, S.",
+                "Pan, L.", "Fang, Y.", "Lv, P.", "Ma, Y.", "Duan, H.", "Wang, B.", "Lv, K.")
+            firstAuthors shouldContainAll listOf("Zhang, X.")
+            publicationYear shouldBeEqualTo "2025"
+            date shouldBeEqualTo ""
+            title shouldBeEqualTo "Short-term effects of combined environmental factors on respiratory " +
+                "disease mortality in Qingdao city: A time-series investigation"
+            periodicalNameFullFormatJO shouldBeEqualTo "PLoS One"
+            volumeNumber shouldBeEqualTo "20(1)"
+            reviewedItem shouldBeEqualTo "e0318250"
+            doi shouldBeEqualTo "https://doi.org/10.1371/journal.pone.0318250"
         }
     }
 })
