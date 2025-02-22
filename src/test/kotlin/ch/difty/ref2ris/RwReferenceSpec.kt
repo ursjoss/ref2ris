@@ -64,22 +64,27 @@ object RwReferenceSpec : FunSpec({
     }
 
     test("case 3") {
-        val ref = "Kang, H., Oh, E., & Choi, Y.-H. (2025, 2025/02/15/). Exposure-crossover observations " +
-            "of air pollution after large-scale fireworks in two Korean megacities, Seoul and Busan: Empirical " +
-            "evidence toward sustainable festivals. Science of The Total Environment, 965, 178640." +
-            " https://doi.org/https://doi.org/10.1016/j.scitotenv.2025.178640"
+        val ref = "Renzetti, S., Volta, M., van Thriel, C., Lucchini, R. G., Smith, D. R., Patrono, " +
+            "A., Cagna, G., Invernizzi, A., Rechtman, E., Ongaro, E., De Angelis, E., Calza, S., Rota, M., " +
+            "Wright, R. O., Claus Henn, B., Horton, M. K., & Placidi, D. (2025, 2025/02/01/). " +
+            "Association between environmental air pollution and olfactory functioning among Italian adolescents " +
+            "and young adults in the province of Brescia, Italy. Atmospheric Pollution Research, 16(2), 102391. " +
+            "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
         RawReference.fromTextLine(ref).toRisRecord().run {
             type shouldBe RisType.JOUR
-            authors shouldContainAll listOf("Kang, H.", "Oh, E.", "Choi, Y.-H.")
-            firstAuthors shouldContainAll listOf("Kang, H.")
+            authors shouldBeEqualTo listOf("Renzetti, S.", "Volta, M.", "van Thriel, C.", "Lucchini, R. G.",
+                "Smith, D. R.", "Patrono, A.", "Cagna, G.", "Invernizzi, A.", "Rechtman, E.", "Ongaro, E.",
+                "De Angelis, E.", "Calza, S.", "Rota, M.", "Wright, R. O.", "Claus Henn, B.", "Horton, M. K.",
+                "Placidi, D.")
+            firstAuthors shouldContainAll listOf("Renzetti, S.")
             publicationYear shouldBeEqualTo "2025"
-            date shouldBeEqualTo "2025/02/15/"
-            title shouldBeEqualTo "Exposure-crossover observations of air pollution after large-scale fireworks " +
-                "in two Korean megacities, Seoul and Busan: Empirical evidence toward sustainable festivals"
-            periodicalNameFullFormatJO shouldBeEqualTo "Science of The Total Environment"
-            volumeNumber shouldBeEqualTo "965"
-            reviewedItem shouldBeEqualTo "178640"
-            doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.scitotenv.2025.178640"
+            date shouldBeEqualTo "2025/02/01/"
+            title shouldBeEqualTo "Association between environmental air pollution and olfactory functioning " +
+                "among Italian adolescents and young adults in the province of Brescia, Italy"
+            periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Pollution Research"
+            volumeNumber shouldBeEqualTo "16(2)"
+            reviewedItem shouldBeEqualTo "102391"
+            doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
         }
     }
 })

@@ -18,7 +18,7 @@ internal data class RawReference(
 ) {
 
     companion object {
-        private val dateRegex = Regex("""\(\d{4}, (.+)\)""")
+        private val dateRegex = Regex("""\(\d{4}, ([^)]+)\)""")
         fun fromTextLine(textLine: String): RawReference {
             val authors = textLine.substringBefore(" (")
             val year = textLine.drop(authors.length + 2).substringBefore(", ")
