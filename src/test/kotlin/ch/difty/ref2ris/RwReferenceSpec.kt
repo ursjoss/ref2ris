@@ -37,4 +37,26 @@ object RwReferenceSpec : FunSpec({
             periodicalNameFullFormatJO shouldBeEqualTo "J Gerontol A Biol Sci Med Sci"
         }
     }
+
+
+    test("case 2") {
+        val ref = "Ahn, S., Yun, H., Oh, J., Kim, S., Jang, H., Kim, Y., Kang, C., Ahn, S., Kim, A., " +
+            "Kwon, D., Park, J., Song, I., Moon, J., Kim, E., Min, J., Kim, H., & Lee, W. (2025, 2025/03/05/). " +
+            "Short-term exposure to warm-season ozone, cardiovascular mortality, and novel high-risk populations: " +
+            "A nationwide time-stratified case-crossover study. Atmospheric Environment, 345, 121031. " +
+            "https://doi.org/https://doi.org/10.1016/j.atmosenv.2025.121031"
+
+        RawReference.fromTextLine(ref).toRisRecord().run {
+            type shouldBe RisType.JOUR
+            authors shouldContainAll listOf("Ahn, S.", "Yun, H.", "Oh, J.", "Kim, S.", "Jang, H.",
+                "Kim, Y.", "Kang, C.", "Ahn, S.", "Kim, A.", "Kwon, D.", "Park, J.", "Song, I.",
+                "Moon, J.", "Kim, E.", "Min, J.", "Kim, H.", "Lee, W.")
+            firstAuthors shouldContainAll listOf("Ahn, S.")
+            publicationYear shouldBeEqualTo "2025"
+            date shouldBeEqualTo "2025/03/05/"
+            title shouldBeEqualTo "Short-term exposure to warm-season ozone, cardiovascular mortality, " +
+                "and novel high-risk populations: A nationwide time-stratified case-crossover study"
+            periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Environment, 345, 121031"
+        }
+    }
 })
