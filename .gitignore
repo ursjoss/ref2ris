@@ -1,0 +1,10 @@
+.gradle/
+.kotlin/
+.idea/
+build/
+s101plugin.state
+out/
+
+!/data/preprocess.sh
+/data/
+data/

@@ -1,0 +1,8 @@
+style:
+  MaxLineLength:
+    maxLineLength: 150
+
+complexity:
+  LongParameterList:
+    active: true
+    ignoreDefaultParameters: true
