@@ -9,7 +9,8 @@ The motivation came from assisting someone who lost several months of collected 
 The data was available in emails, but only in a scitation format that could not be imported into Endnote directly.
 
 To run:
-- place the text files with the citations in the `data` folder
+
+Place the text files with the citations in the `data` folder
 
 [console]
 ----
