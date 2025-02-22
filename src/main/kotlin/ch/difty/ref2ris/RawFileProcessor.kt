@@ -32,8 +32,8 @@ internal enum class RawFiles : RawFileProcessor {
             toTextLines()
                 .toRawReference()
                 .toRisRecord { it.toRisRecord() }
+                .toSet().toList().asFlow()
                 .toRisLines()
-                .toSet().toList().sorted().asFlow()
                 .writeCleanFileLineTo(outputPath)
 
     },
