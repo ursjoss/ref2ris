@@ -12,6 +12,8 @@ internal data class RawReference(
     val date: String?,
     val title: String,
     val journal: String,
+    val volumeNumber: String?,
+    val articleNumber: String?,
     val doi: String?,
 ) {
 
@@ -22,12 +24,17 @@ internal data class RawReference(
             val year = textLine.drop(authors.length + 2).substringBefore(", ")
             val date = dateRegex.find(textLine)?.groupValues?.get(1)
             val afterYearAndDate = textLine.split("). ").drop(1).joinToString("). ")
-            val parts = afterYearAndDate.split(". ")
-            val (title, journal, _) = parts
-            val indexOfJournal = afterYearAndDate.indexOf(journal)
-            val afterJournal = afterYearAndDate.drop(indexOfJournal + journal.length + 2)
+            val partsAfterYearAndDate = afterYearAndDate.split(". ")
+            val (title, journalWithVolumeNumberAndArticleNumber, _) = partsAfterYearAndDate
+            val journalParts = journalWithVolumeNumberAndArticleNumber.split(", ")
+            val journal = journalParts.first()
+            val volumeNumber = journalParts.getOrNull(1)
+            val articleNumber = journalParts.getOrNull(2)
+            val indexOfJournal = afterYearAndDate.indexOf(journalWithVolumeNumberAndArticleNumber)
+            val afterJournal = afterYearAndDate
+                .drop(indexOfJournal + journalWithVolumeNumberAndArticleNumber.length + 2)
             val doi = afterJournal.takeIf { "doi" in it }
-            return RawReference(textLine, authors, year, date, title, journal, doi)
+            return RawReference(textLine, authors, year, date, title, journal, volumeNumber, articleNumber, doi)
         }
     }
 }
@@ -50,6 +57,8 @@ internal fun RawReference.toRisRecord(): RisRecord {
         date = rr.date
         title = rr.title
         periodicalNameFullFormatJO = rr.journal
+        volumeNumber = rr.volumeNumber
+        reviewedItem = rr.articleNumber
         doi = rr.doi
     }
 }

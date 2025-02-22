@@ -56,8 +56,30 @@ object RwReferenceSpec : FunSpec({
             date shouldBeEqualTo "2025/03/05/"
             title shouldBeEqualTo "Short-term exposure to warm-season ozone, cardiovascular mortality, " +
                 "and novel high-risk populations: A nationwide time-stratified case-crossover study"
-            periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Environment, 345, 121031"
+            periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Environment"
+            volumeNumber shouldBeEqualTo "345"
+            reviewedItem shouldBeEqualTo "121031"
             doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.atmosenv.2025.121031"
+        }
+    }
+
+    test("case 3") {
+        val ref = "Kang, H., Oh, E., & Choi, Y.-H. (2025, 2025/02/15/). Exposure-crossover observations " +
+            "of air pollution after large-scale fireworks in two Korean megacities, Seoul and Busan: Empirical " +
+            "evidence toward sustainable festivals. Science of The Total Environment, 965, 178640." +
+            " https://doi.org/https://doi.org/10.1016/j.scitotenv.2025.178640"
+        RawReference.fromTextLine(ref).toRisRecord().run {
+            type shouldBe RisType.JOUR
+            authors shouldContainAll listOf("Kang, H.", "Oh, E.", "Choi, Y.-H.")
+            firstAuthors shouldContainAll listOf("Kang, H.")
+            publicationYear shouldBeEqualTo "2025"
+            date shouldBeEqualTo "2025/02/15/"
+            title shouldBeEqualTo "Exposure-crossover observations of air pollution after large-scale fireworks " +
+                "in two Korean megacities, Seoul and Busan: Empirical evidence toward sustainable festivals"
+            periodicalNameFullFormatJO shouldBeEqualTo "Science of The Total Environment"
+            volumeNumber shouldBeEqualTo "965"
+            reviewedItem shouldBeEqualTo "178640"
+            doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.scitotenv.2025.178640"
         }
     }
 })
