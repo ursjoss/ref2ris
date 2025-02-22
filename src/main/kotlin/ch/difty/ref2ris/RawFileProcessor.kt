@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.toSet
 import java.io.BufferedWriter
 import java.nio.charset.Charset
 import java.nio.file.Files
@@ -32,6 +33,7 @@ internal enum class RawFiles : RawFileProcessor {
                 .toRawReference()
                 .toRisRecord { it.toRisRecord() }
                 .toRisLines()
+                .toSet().toList().sorted().asFlow()
                 .writeCleanFileLineTo(outputPath)
 
     },
