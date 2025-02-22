@@ -100,7 +100,7 @@ object RwReferenceSpec : FunSpec({
                 "Pan, L.", "Fang, Y.", "Lv, P.", "Ma, Y.", "Duan, H.", "Wang, B.", "Lv, K.")
             firstAuthors shouldContainAll listOf("Zhang, X.")
             publicationYear shouldBeEqualTo "2025"
-            date shouldBeEqualTo ""
+            date.shouldBeNull()
             title shouldBeEqualTo "Short-term effects of combined environmental factors on respiratory " +
                 "disease mortality in Qingdao city: A time-series investigation"
             periodicalNameFullFormatJO shouldBeEqualTo "PLoS One"

@@ -24,7 +24,7 @@ internal data class RawReference(
             val startingWithYear = textLine.drop(authors.length + 2)
             val yearAndOptionallyDate = dateRegex.find(startingWithYear)
             val year = yearAndOptionallyDate?.groupValues?.get(1) ?: error("Unable to get year from $textLine")
-            val date = yearAndOptionallyDate.groupValues[2]
+            val date = yearAndOptionallyDate.groupValues[2]?.takeIf { it.isNotBlank() }
             val afterYearAndDate = textLine.split("). ").drop(1).joinToString("). ")
             val partsAfterYearAndDate = afterYearAndDate.split(". ")
             val (title, journalWithVolumeNumberAndArticleNumber, _) = partsAfterYearAndDate
