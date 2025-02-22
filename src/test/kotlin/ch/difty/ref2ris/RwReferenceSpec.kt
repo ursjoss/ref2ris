@@ -4,6 +4,7 @@ import ch.difty.kris.domain.RisType
 import io.kotest.core.spec.style.FunSpec
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainAll
 
 object RwReferenceSpec : FunSpec({
@@ -106,6 +107,26 @@ object RwReferenceSpec : FunSpec({
             volumeNumber shouldBeEqualTo "20(1)"
             reviewedItem shouldBeEqualTo "e0318250"
             doi shouldBeEqualTo "https://doi.org/10.1371/journal.pone.0318250"
+        }
+    }
+
+    test("5. no volume and review item") {
+        val ref = "Kurasz, A., Lip, G. Y. H., Święczkowski, M., Tomaszuk-Kazberuk, A., Dobrzycki, S., & Kuźma, Ł. " +
+            "(2025, Jan 15). Air quality and the risk of acute atrial fibrillation (EP-PARTICLES study): " +
+            "A nationwide study in Poland. Eur J Prev Cardiol. https://doi.org/10.1093/eurjpc/zwaf016"
+        RawReference.fromTextLine(ref).toRisRecord().run {
+            type shouldBe RisType.JOUR
+            authors shouldBeEqualTo listOf("Kurasz, A.", "Lip, G. Y. H.", "Święczkowski, M.", "Tomaszuk-Kazberuk, A.",
+                "Dobrzycki, S.", "Kuźma, Ł.")
+            firstAuthors shouldContainAll listOf("Kurasz, A.")
+            publicationYear shouldBeEqualTo "2025"
+            date shouldBeEqualTo "Jan 15"
+            title shouldBeEqualTo "Air quality and the risk of acute atrial fibrillation (EP-PARTICLES study): " +
+                "A nationwide study in Poland"
+            periodicalNameFullFormatJO shouldBeEqualTo "Eur J Prev Cardiol"
+            volumeNumber.shouldBeNull()
+            reviewedItem.shouldBeNull()
+            doi shouldBeEqualTo "https://doi.org/10.1093/eurjpc/zwaf016"
         }
     }
 })
