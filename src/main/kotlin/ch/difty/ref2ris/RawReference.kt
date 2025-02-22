@@ -5,12 +5,20 @@ import ch.difty.kris.domain.RisType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal data class RawReference(val textLine: String, val authors: String) {
+internal data class RawReference(
+    val textLine: String,
+    val authors: String,
+    val publicationYear: String,
+    val date: String?,
+) {
 
     companion object {
+        private val dateRegex = Regex("""\(\d{4}, (.+)\)""")
         fun fromTextLine(textLine: String): RawReference {
             val authors = textLine.substringBefore(" (")
-            return RawReference(textLine, authors)
+            val year = textLine.drop(authors.length + 2).substringBefore(", ")
+            val date = dateRegex.find(textLine)?.groupValues?.get(1)
+            return RawReference(textLine, authors, year, date)
         }
     }
 }
@@ -29,5 +37,7 @@ internal fun RawReference.toRisRecord(): RisRecord {
         userDefinable1 = rr.textLine
         authors.addAll(allAuthors)
         firstAuthors.add(allAuthors.first())
+        publicationYear = rr.publicationYear
+        date = rr.date
     }
 }

@@ -2,8 +2,9 @@ package ch.difty.ref2ris
 
 import ch.difty.kris.domain.RisType
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.shouldBe
 import org.amshove.kluent.shouldContainAll
+import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldBeEqualTo
 
 object RwReferenceSpec : FunSpec({
 
@@ -14,15 +15,20 @@ object RwReferenceSpec : FunSpec({
             "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged Adults " +
             "in China: A Prospective Cohort Study"
 
-        val rawRef = RawReference.fromTextLine(ref)
-        rawRef.textLine shouldBe ref
-        rawRef.authors shouldBe "Zhu, A., Kan, H., Shi, X., Zeng, Y., & Ji, J. S."
+        val rawRef = RawReference.fromTextLine(ref).apply {
+            textLine shouldBeEqualTo ref
+            authors shouldBeEqualTo "Zhu, A., Kan, H., Shi, X., Zeng, Y., & Ji, J. S."
+            publicationYear shouldBeEqualTo "2024"
+            date shouldBeEqualTo "Dec 24"
+        }
 
-        val risRecord = rawRef.toRisRecord()
-
-        risRecord.type shouldBe RisType.JOUR
-        risRecord.userDefinable1 shouldBe ref
-        risRecord.authors shouldContainAll listOf( "Zhu, A.", "Kan, H.", "Shi, X.", "Zeng, Y.", "Ji, J. S.")
-        risRecord.firstAuthors shouldContainAll listOf("Zhu, A.")
+        rawRef.toRisRecord().run {
+            type shouldBe RisType.JOUR
+            userDefinable1 shouldBeEqualTo ref
+            authors shouldContainAll listOf("Zhu, A.", "Kan, H.", "Shi, X.", "Zeng, Y.", "Ji, J. S.")
+            firstAuthors shouldContainAll listOf("Zhu, A.")
+            publicationYear shouldBeEqualTo "2024"
+            date shouldBeEqualTo "Dec 24"
+        }
     }
 })
