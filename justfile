@@ -1,8 +1,7 @@
 @_list:
-	just --list --unsorted
+    just --list --unsorted
 
 host := `uname -a`
 
-run PATH:
-    ./gradlew :run --console plain --args="--path={{PATH}}"
-
+run INPUT OUTPUT:
+    ./gradlew :run --console plain --args="--input={{ INPUT }} --output={{ OUTPUT }}"

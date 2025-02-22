@@ -2,9 +2,9 @@ package ch.difty.ref2ris
 
 import ch.difty.kris.domain.RisType
 import io.kotest.core.spec.style.FunSpec
-import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainAll
 
 object RwReferenceSpec : FunSpec({
 
@@ -21,7 +21,7 @@ object RwReferenceSpec : FunSpec({
             publicationYear shouldBeEqualTo "2024"
             date shouldBeEqualTo "Dec 24"
             title shouldBeEqualTo "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
-            "Adults in China: A Prospective Cohort Study"
+                "Adults in China: A Prospective Cohort Study"
             journal shouldBeEqualTo "J Gerontol A Biol Sci Med Sci"
         }
 

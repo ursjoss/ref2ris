@@ -14,23 +14,20 @@ import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
+import kotlin.io.path.absolutePathString
 
 /**
  * [RawFileProcessor] interface configuring processing pipelines for the different file imports.
  */
 internal interface RawFileProcessor {
-    val outputPath: String
-    suspend fun Flow<Path>.processAllLines(folder: Path): Flow<Int>
+    suspend fun Flow<Path>.processAllLines(intputPath: Path, outputPath: Path): Flow<Int>
 }
 
 internal enum class RawFiles : RawFileProcessor {
     References {
-        override val outputPath: String
-            get() = "output.ris"
-
         @Suppress("MagicNumber")
         @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-        override suspend fun Flow<Path>.processAllLines(folder: Path): Flow<Int> =
+        override suspend fun Flow<Path>.processAllLines(inputPath: Path, outputPath: Path): Flow<Int> =
             toTextLines()
                 .toRawReference()
                 .toRisRecord { it.toRisRecord() }
@@ -57,7 +54,7 @@ internal fun Flow<String>.printToConsole(): Flow<Int> = flow {
  * Processes the lines according to the [RawFileProcessor] as receiver.
  */
 @ExperimentalCoroutinesApi
-internal suspend fun RawFileProcessor.processAllLines(path: Path): ProcessorResult {
+internal suspend fun RawFileProcessor.processAllLines(inputPath: Path, outputPath: Path): ProcessorResult {
     fun resolveFiles(path: Path): Flow<Path> =
         if (path.toFile().isDirectory)
             path.toFile().walk().filter { it.isFile }.map { it.toPath() }.asFlow()
@@ -65,8 +62,8 @@ internal suspend fun RawFileProcessor.processAllLines(path: Path): ProcessorResu
             .filterNot {
                 it.toFile().isDirectory
             }.asFlow()
-    return resolveFiles(path)
-        .processAllLines(path)
+    return resolveFiles(inputPath)
+        .processAllLines(inputPath, outputPath)
         .processResult()
 }
 
@@ -75,10 +72,10 @@ internal fun Flow<RawReference>.toRisRecord(f: (RawReference) -> RisRecord): Flo
 }
 
 @ExperimentalCoroutinesApi
-private fun Flow<String>.writeCleanFileLineTo(outputPath: String): Flow<Int> =
+private fun Flow<String>.writeCleanFileLineTo(outputPath: Path): Flow<Int> =
     flow {
         var lines = 0
-        openCleanWriter(outputPath).use { writer ->
+        openCleanWriter(outputPath.absolutePathString()).use { writer ->
             collect { line ->
                 writer.append(line)
                 lines++

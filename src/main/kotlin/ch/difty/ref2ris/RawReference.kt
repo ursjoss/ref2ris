@@ -47,7 +47,7 @@ internal fun Flow<TextLine>.toRawReference(): Flow<RawReference> = flow {
 
 internal fun RawReference.toRisRecord(): RisRecord {
     val rr = this
-    val allAuthors = rr.authors.dropLast(1).replace(" & ", " ").split("., ").map{ "$it."}
+    val allAuthors = rr.authors.dropLast(1).replace(" & ", " ").split("., ").map { "$it." }
     return RisRecord().apply {
         type = RisType.JOUR
         userDefinable1 = rr.textLine

@@ -18,8 +18,11 @@ private val log = KotlinLogging.logger {}
 
 @ExperimentalCoroutinesApi
 class Process : CliktCommand("process references") {
-    private val path: String
-        by option("--path", help = "The file or folder containing the files to process").default("data")
+    private val input: String
+        by option("--input", help = "The file or folder containing the files to process").default("data")
+
+    private val output: String
+        by option("--output", help = "The output file with the resulting RIS records").default("output.ris")
 
     private val debug: Boolean
         by option("-d", help = "Print parsed lines").flag("--debug", default = false)
@@ -28,15 +31,17 @@ class Process : CliktCommand("process references") {
 
     override fun run() = runBlocking(Dispatchers.IO) {
         Settings.debug = debug
-        Settings.folder = path
+        Settings.input = input
+        Settings.output = output
         @Suppress("SpreadOperator")
         doProcess(*RawFiles.entries.toTypedArray())
     }
 
     private suspend fun doProcess(vararg processors: RawFileProcessor) {
-        val dataFolder = Paths.get(path)
+        val inputPath = Paths.get(input)
+        val outputPath = Paths.get(output)
         processors.asIterable().forEach {
-            it.processAllLines(dataFolder).also {
+            it.processAllLines(inputPath, outputPath).also {
                 log.info { it }
             }
         }
@@ -48,5 +53,6 @@ fun main(args: Array<String>) = Process().main(args)
 
 object Settings {
     var debug: Boolean = false
-    var folder: String = "data"
+    var input: String = "data"
+    var output: String = "output.ris"
 }
