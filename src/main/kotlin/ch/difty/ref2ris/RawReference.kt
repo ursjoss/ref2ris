@@ -10,6 +10,7 @@ internal data class RawReference(
     val authors: String,
     val publicationYear: String,
     val date: String?,
+    val title: String,
 ) {
 
     companion object {
@@ -18,7 +19,10 @@ internal data class RawReference(
             val authors = textLine.substringBefore(" (")
             val year = textLine.drop(authors.length + 2).substringBefore(", ")
             val date = dateRegex.find(textLine)?.groupValues?.get(1)
-            return RawReference(textLine, authors, year, date)
+            val remainder = textLine.split("). ").drop(1).joinToString("). ")
+            val parts = remainder.split(". ")
+            val title = parts.first()
+            return RawReference(textLine, authors, year, date, title)
         }
     }
 }
@@ -39,5 +43,6 @@ internal fun RawReference.toRisRecord(): RisRecord {
         firstAuthors.add(allAuthors.first())
         publicationYear = rr.publicationYear
         date = rr.date
+        title = rr.title
     }
 }

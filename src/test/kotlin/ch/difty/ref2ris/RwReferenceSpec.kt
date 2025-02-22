@@ -20,6 +20,8 @@ object RwReferenceSpec : FunSpec({
             authors shouldBeEqualTo "Zhu, A., Kan, H., Shi, X., Zeng, Y., & Ji, J. S."
             publicationYear shouldBeEqualTo "2024"
             date shouldBeEqualTo "Dec 24"
+            title shouldBeEqualTo "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
+            "Adults in China: A Prospective Cohort Study"
         }
 
         rawRef.toRisRecord().run {
@@ -29,6 +31,8 @@ object RwReferenceSpec : FunSpec({
             firstAuthors shouldContainAll listOf("Zhu, A.")
             publicationYear shouldBeEqualTo "2024"
             date shouldBeEqualTo "Dec 24"
+            title shouldBeEqualTo "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
+                "Adults in China: A Prospective Cohort Study"
         }
     }
 })
