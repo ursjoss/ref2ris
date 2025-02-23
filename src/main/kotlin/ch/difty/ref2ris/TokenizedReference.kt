@@ -79,6 +79,8 @@ internal data class TokenizedReference(
             val afterJournal = afterYearAndDate
                 .drop(indexOfJournal + journalWithVolumeNumberAndArticleNumber.length + 2)
             val doiOrNull = afterJournal.takeIf { "doi" in it }
+                ?.substringAfter("https://doi.org/")
+                ?.substringAfter("https://doi.org/")
             return Triple(title, doiOrNull, journalWithVolumeNumberAndArticleNumber)
         }
 

@@ -61,7 +61,7 @@ object RwReferenceSpec : FunSpec({
             volumeNumber shouldBeEqualTo "345"
             startPage shouldBeEqualTo "121031"
             endPage.shouldBeNull()
-            doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.atmosenv.2025.121031"
+            doi shouldBeEqualTo "10.1016/j.atmosenv.2025.121031"
         }
     }
 
@@ -71,7 +71,7 @@ object RwReferenceSpec : FunSpec({
             "Wright, R. O., Claus Henn, B., Horton, M. K., & Placidi, D. (2025, 2025/02/01/). " +
             "Association between environmental air pollution and olfactory functioning among Italian adolescents " +
             "and young adults in the province of Brescia, Italy. Atmospheric Pollution Research, 16(2), 102391. " +
-            "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
+            "https://doi.org/10.1016/j.apr.2024.102391"
         TokenizedReference.fromTextLine(TextLine(ref)).asRisRecord().run {
             type shouldBe RisType.JOUR
             authors shouldBeEqualTo listOf("Renzetti, S.", "Volta, M.", "van Thriel, C.", "Lucchini, R. G.",
@@ -87,7 +87,7 @@ object RwReferenceSpec : FunSpec({
             issue shouldBeEqualTo "2"
             startPage shouldBeEqualTo "102391"
             endPage.shouldBeNull()
-            doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
+            doi shouldBeEqualTo "10.1016/j.apr.2024.102391"
         }
     }
 
@@ -109,7 +109,7 @@ object RwReferenceSpec : FunSpec({
             issue shouldBeEqualTo "1"
             startPage shouldBeEqualTo "e0318250"
             endPage.shouldBeNull()
-            doi shouldBeEqualTo "https://doi.org/10.1371/journal.pone.0318250"
+            doi shouldBeEqualTo "10.1371/journal.pone.0318250"
         }
     }
 
@@ -129,7 +129,7 @@ object RwReferenceSpec : FunSpec({
             volumeNumber.shouldBeNull()
             startPage.shouldBeNull()
             endPage.shouldBeNull()
-            doi shouldBeEqualTo "https://doi.org/10.1093/eurjpc/zwaf016"
+            doi shouldBeEqualTo "10.1093/eurjpc/zwaf016"
         }
     }
 
@@ -149,7 +149,7 @@ object RwReferenceSpec : FunSpec({
             issue shouldBeEqualTo "12"
             startPage shouldBeEqualTo "8715"
             endPage shouldBeEqualTo "8727"
-            doi shouldBeEqualTo "https://doi.org/10.1002/alz.14320"
+            doi shouldBeEqualTo "10.1002/alz.14320"
         }
     }
 })
