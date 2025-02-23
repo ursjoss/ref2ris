@@ -133,7 +133,7 @@ object RwReferenceSpec : FunSpec({
         }
     }
 
-    test("5. with start and end page") {
+    test("6. with start and end page") {
         val ref = "Aretz, B., Doblhammer, G., & Heneka, M. T. (2024, Dec). The role of leukocytes in cognitive " +
             "impairment due to long-term exposure to fine particulate matter: A large population-based mediation " +
             "analysis. Alzheimers Dement, 20(12), 8715-8727. https://doi.org/10.1002/alz.14320"
@@ -150,6 +150,31 @@ object RwReferenceSpec : FunSpec({
             startPage shouldBeEqualTo "8715"
             endPage shouldBeEqualTo "8727"
             doi shouldBeEqualTo "10.1002/alz.14320"
+        }
+    }
+
+    test("7. with no volume but pages") {
+        val ref = "Chauhan, R., Dande, S., Hood, D. B., Chirwa, S. S., Langston, M. A., Grady, " +
+            "S. K., Dojcsak, L., Tabatabai, M., Wilus, D., Valdez, R. B., Al-Hamdan, M. Z., Im, W., " +
+            "McCallister, M., Alcendor, D. J., Mouton, C. P., & Ramesh, A. (2025, Jan 18). " +
+            "Particulate matter 2.5 (PM(2.5)) - associated cognitive impairment and morbidity in humans " +
+            "and animal models: a systematic review. J Toxicol Environ Health B Crit Rev, 1-31. " +
+            "https://doi.org/10.1080/10937404.2025.2450354"
+        TokenizedReference.fromTextLine(TextLine(ref)).asRisRecord().run {
+            type shouldBe RisType.JOUR
+            authors shouldBeEqualTo listOf("Chauhan, R.", "Dande, S.", "Hood, D. B.", "Chirwa, S. S.",
+                "Langston, M. A.", "Grady, S. K.", "Dojcsak, L.", "Tabatabai, M.", "Wilus, D.", "Valdez, R. B.",
+                "Al-Hamdan, M. Z.", "Im, W.", "McCallister, M.", "Alcendor, D. J.", "Mouton, C. P.", "Ramesh, A.")
+            publicationYear shouldBeEqualTo "2025"
+            date shouldBeEqualTo "Jan 18"
+            title shouldBeEqualTo "Particulate matter 2.5 (PM(2.5)) - associated cognitive impairment and morbidity " +
+                "in humans and animal models: a systematic review"
+            periodicalNameFullFormatJO shouldBeEqualTo "J Toxicol Environ Health B Crit Rev"
+            volumeNumber.shouldBeNull()
+            issue.shouldBeNull()
+            startPage shouldBeEqualTo "1"
+            endPage shouldBeEqualTo "31"
+            doi shouldBeEqualTo "10.1080/10937404.2025.2450354"
         }
     }
 })

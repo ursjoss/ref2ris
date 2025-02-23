@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Locale
+import java.util.*
 
 /** String tokens of the reference line */
 internal data class TokenizedReference(
@@ -66,8 +66,7 @@ internal data class TokenizedReference(
                         dateMatch.groupValues[++i].toInt()
                     )
                     ld.format(formatter)
-                }
-                else it
+                } else it
             }
             return Pair(year, date)
         }
@@ -87,16 +86,26 @@ internal data class TokenizedReference(
         private fun tokenizeJournalFrom(journalWithVolumeAndPages: String): JournalToken {
             val journalParts = journalWithVolumeAndPages.split(", ")
             val journal = journalParts.first()
-            val volume = journalParts.getOrNull(1)?.substringBefore('(')
-            val issue = journalParts.getOrNull(1)?.substringAfter("(")?.substringBefore(")")
-            val pages = journalParts.getOrNull(2)
-            return JournalToken(
-                journal,
-                volume,
-                issue,
-                pages?.substringBefore('-'),
-                pages?.takeIf{ it.contains('-')}?.substringAfter('-'),
-            )
+            val potentialVolume = journalParts.getOrNull(1)?.substringBefore('(')
+            val potentialIssue = journalParts.getOrNull(1)?.substringAfter("(")?.substringBefore(")")
+            val potentialPages = journalParts.getOrNull(2)
+            return if (potentialPages == null && potentialVolume?.contains('-') == true) {
+                JournalToken(
+                    journal,
+                    null,
+                    null,
+                    potentialVolume.substringBefore('-'),
+                    potentialVolume.takeIf { it.contains('-') }?.substringAfter('-'),
+                )
+            } else {
+                JournalToken(
+                    journal,
+                    potentialVolume,
+                    potentialIssue,
+                    potentialPages?.substringBefore('-'),
+                    potentialPages?.takeIf { it.contains('-') }?.substringAfter('-'),
+                )
+            }
         }
 
         private data class JournalToken(
