@@ -8,6 +8,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import java.io.BufferedWriter
 import java.nio.charset.Charset
@@ -16,49 +17,31 @@ import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.absolutePathString
 
-/**
- * [RawFileProcessor] interface configuring processing pipelines for the different file imports.
- */
-internal interface RawFileProcessor {
-    suspend fun Flow<Path>.processAllLines(intputPath: Path, outputPath: Path): Flow<Int>
-}
-
-internal enum class RawFiles : RawFileProcessor {
-    References {
-        @Suppress("MagicNumber")
-        @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-        override suspend fun Flow<Path>.processAllLines(inputPath: Path, outputPath: Path): Flow<Int> =
-            toTextLines()
-                .toRawReference()
-                .toRisRecord { it.toRisRecord() }
-                .unique()
-                .toRisLines()
-                .writeCleanFileLineTo(outputPath)
-
-    },
-}
-
-/**
- * Processes the lines according to the [RawFileProcessor] as receiver.
- */
 @ExperimentalCoroutinesApi
-internal suspend fun RawFileProcessor.processAllLines(inputPath: Path, outputPath: Path): ProcessorResult {
-    fun resolveFiles(path: Path): Flow<Path> =
-        if (path.toFile().isDirectory)
-            path.toFile().listFiles()
-                .filter { it.isFile }
-                .map { it.toPath() }
-                .asFlow()
-        else path
-            .filterNot {
-                it.toFile().isDirectory
-            }.asFlow()
-    return resolveFiles(inputPath)
-        .processAllLines(inputPath, outputPath)
+internal suspend fun processAllLines(inputPath: Path, outputPath: Path): ProcessorResult =
+    resolveFiles(inputPath)
+        .processInto(outputPath)
         .processResult()
-}
 
-private fun Flow<RawReference>.toRisRecord(f: (RawReference) -> RisRecord): Flow<RisRecord> = flow {
+/** Flow of a single file path or paths of all files in a specified directory */
+private fun resolveFiles(path: Path): Flow<Path> =
+    if (path.toFile().isDirectory)
+        path.toFile().listFiles()
+            .filter { it.isFile }
+            .map { it.toPath() }
+            .asFlow()
+    else path.toFile().takeIf { it.isFile }?.let { flowOf(path) } ?: error("Unable to process file $path")
+
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+private fun Flow<Path>.processInto(outputPath: Path): Flow<Int> =
+    toTextLines()
+        .toRawReference()
+        .toRisRecord { it.toRisRecord() }
+        .unique()
+        .toRisLines()
+        .writeCleanFileLineTo(outputPath)
+
+private fun Flow<TokenizedReference>.toRisRecord(f: (TokenizedReference) -> RisRecord): Flow<RisRecord> = flow {
     collect { rawReference -> emit(f(rawReference)) }
 }
 

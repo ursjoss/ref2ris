@@ -16,7 +16,7 @@ object RwReferenceSpec : FunSpec({
             "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged Adults " +
             "in China: A Prospective Cohort Study"
 
-        val rawRef = RawReference.fromTextLine(ref).apply {
+        val rawRef = TokenizedReference.fromTextLine(TextLine(ref)).apply {
             textLine shouldBeEqualTo ref
             authors shouldBeEqualTo "Zhu, A., Kan, H., Shi, X., Zeng, Y., & Ji, J. S."
             publicationYear shouldBeEqualTo "2024"
@@ -47,7 +47,7 @@ object RwReferenceSpec : FunSpec({
             "A nationwide time-stratified case-crossover study. Atmospheric Environment, 345, 121031. " +
             "https://doi.org/https://doi.org/10.1016/j.atmosenv.2025.121031"
 
-        RawReference.fromTextLine(ref).toRisRecord().run {
+        TokenizedReference.fromTextLine(TextLine(ref)).toRisRecord().run {
             type shouldBe RisType.JOUR
             authors shouldContainAll listOf("Ahn, S.", "Yun, H.", "Oh, J.", "Kim, S.", "Jang, H.",
                 "Kim, Y.", "Kang, C.", "Ahn, S.", "Kim, A.", "Kwon, D.", "Park, J.", "Song, I.",
@@ -71,7 +71,7 @@ object RwReferenceSpec : FunSpec({
             "Association between environmental air pollution and olfactory functioning among Italian adolescents " +
             "and young adults in the province of Brescia, Italy. Atmospheric Pollution Research, 16(2), 102391. " +
             "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
-        RawReference.fromTextLine(ref).toRisRecord().run {
+        TokenizedReference.fromTextLine(TextLine(ref)).toRisRecord().run {
             type shouldBe RisType.JOUR
             authors shouldBeEqualTo listOf("Renzetti, S.", "Volta, M.", "van Thriel, C.", "Lucchini, R. G.",
                 "Smith, D. R.", "Patrono, A.", "Cagna, G.", "Invernizzi, A.", "Rechtman, E.", "Ongaro, E.",
@@ -94,7 +94,7 @@ object RwReferenceSpec : FunSpec({
             "H., Wang, B., & Lv, K. (2025). Short-term effects of combined environmental factors on respiratory " +
             "disease mortality in Qingdao city: A time-series investigation. PLoS One, 20(1), e0318250. " +
             "https://doi.org/10.1371/journal.pone.0318250"
-        RawReference.fromTextLine(ref).toRisRecord().run {
+        TokenizedReference.fromTextLine(TextLine(ref)).toRisRecord().run {
             type shouldBe RisType.JOUR
             authors shouldBeEqualTo listOf("Zhang, X.", "Xi, Z.", "Yang, M.", "Zhang, X.", "Wu, R.", "Li, S.",
                 "Pan, L.", "Fang, Y.", "Lv, P.", "Ma, Y.", "Duan, H.", "Wang, B.", "Lv, K.")
@@ -114,7 +114,7 @@ object RwReferenceSpec : FunSpec({
         val ref = "Kurasz, A., Lip, G. Y. H., Święczkowski, M., Tomaszuk-Kazberuk, A., Dobrzycki, S., & Kuźma, Ł. " +
             "(2025, Jan 15). Air quality and the risk of acute atrial fibrillation (EP-PARTICLES study): " +
             "A nationwide study in Poland. Eur J Prev Cardiol. https://doi.org/10.1093/eurjpc/zwaf016"
-        RawReference.fromTextLine(ref).toRisRecord().run {
+        TokenizedReference.fromTextLine(TextLine(ref)).toRisRecord().run {
             type shouldBe RisType.JOUR
             authors shouldBeEqualTo listOf("Kurasz, A.", "Lip, G. Y. H.", "Święczkowski, M.", "Tomaszuk-Kazberuk, A.",
                 "Dobrzycki, S.", "Kuźma, Ł.")

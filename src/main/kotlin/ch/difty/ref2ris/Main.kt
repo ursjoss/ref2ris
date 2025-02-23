@@ -6,7 +6,6 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.Context
 import com.github.ajalt.clikt.core.main
 import com.github.ajalt.clikt.parameters.options.default
-import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.Dispatchers
@@ -24,35 +23,18 @@ class Process : CliktCommand("process references") {
     private val output: String
         by option("--output", help = "The output file with the resulting RIS records").default("output.ris")
 
-    private val debug: Boolean
-        by option("-d", help = "Print parsed lines").flag("--debug", default = false)
-
     override fun help(context: Context) = "Process the references in the files in the specified folder"
 
     override fun run() = runBlocking(Dispatchers.IO) {
-        Settings.debug = debug
-        Settings.input = input
-        Settings.output = output
-        @Suppress("SpreadOperator")
-        doProcess(*RawFiles.entries.toTypedArray())
+        doProcess()
     }
 
-    private suspend fun doProcess(vararg processors: RawFileProcessor) {
-        val inputPath = Paths.get(input)
-        val outputPath = Paths.get(output)
-        processors.asIterable().forEach {
-            it.processAllLines(inputPath, outputPath).also {
-                log.info { it }
-            }
+    private suspend fun doProcess() {
+        processAllLines(Paths.get(input), Paths.get(output)).also {
+            log.info { it }
         }
     }
 }
 
 @ExperimentalCoroutinesApi
 fun main(args: Array<String>) = Process().main(args)
-
-object Settings {
-    var debug: Boolean = false
-    var input: String = "data"
-    var output: String = "output.ris"
-}

@@ -4,9 +4,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.fold
 
-/**
- * The [ProcessorResult] comprised of the relevant resulting information.
- */
 internal data class ProcessorResult(val processed: Int) {
     override fun toString(): String = "Successfully processed $processed lines"
 }
