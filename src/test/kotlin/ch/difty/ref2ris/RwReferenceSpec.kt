@@ -54,7 +54,7 @@ object RwReferenceSpec : FunSpec({
                 "Kim, Y.", "Kang, C.", "Ahn, S.", "Kim, A.", "Kwon, D.", "Park, J.", "Song, I.",
                 "Moon, J.", "Kim, E.", "Min, J.", "Kim, H.", "Lee, W.")
             publicationYear shouldBeEqualTo "2025"
-            date shouldBeEqualTo "2025/03/05/"
+            date shouldBeEqualTo "Mar 5"
             title shouldBeEqualTo "Short-term exposure to warm-season ozone, cardiovascular mortality, " +
                 "and novel high-risk populations: A nationwide time-stratified case-crossover study"
             periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Environment"
@@ -79,7 +79,7 @@ object RwReferenceSpec : FunSpec({
                 "De Angelis, E.", "Calza, S.", "Rota, M.", "Wright, R. O.", "Claus Henn, B.", "Horton, M. K.",
                 "Placidi, D.")
             publicationYear shouldBeEqualTo "2025"
-            date shouldBeEqualTo "2025/02/01/"
+            date shouldBeEqualTo "Feb 1"
             title shouldBeEqualTo "Association between environmental air pollution and olfactory functioning " +
                 "among Italian adolescents and young adults in the province of Brescia, Italy"
             periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Pollution Research"

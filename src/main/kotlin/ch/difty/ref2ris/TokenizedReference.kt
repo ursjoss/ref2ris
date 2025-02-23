@@ -4,6 +4,9 @@ import ch.difty.kris.domain.RisRecord
 import ch.difty.kris.domain.RisType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 /** String tokens of the reference line */
 internal data class TokenizedReference(
@@ -20,7 +23,8 @@ internal data class TokenizedReference(
 ) {
 
     companion object {
-        private val dateRegex = Regex("""(\d{4})(?:, ([^)]+))?\)""")
+        private val yearDateRegex = Regex("""(\d{4})(?:, ([^)]+))?\)""")
+        private val dateRegex = Regex("""(\d{4})/(\d{2})/(\d{2})/""")
 
         /** Accepts the reference as full string, returning a class with tokenized reference strings */
         fun fromTextLine(textLine: TextLine): TokenizedReference {
@@ -48,9 +52,22 @@ internal data class TokenizedReference(
 
         private fun TextLine.tokenizedYearAndDate(authors: String): Pair<String, String?> {
             val startingWithYear = line.drop(authors.length + 2)
-            val yearAndOptionallyDate = dateRegex.find(startingWithYear)
+            val yearAndOptionallyDate = yearDateRegex.find(startingWithYear)
             val year = yearAndOptionallyDate?.groupValues?.get(1) ?: error("Unable to get year from $line")
-            val date = yearAndOptionallyDate.groupValues[2].takeIf { it.isNotBlank() }
+            val date = yearAndOptionallyDate.groupValues[2].takeIf { it.isNotBlank() }?.let {
+                val dateMatch = dateRegex.find(it)
+                if (dateMatch != null) {
+                    val formatter = DateTimeFormatter.ofPattern("MMM d", Locale.ENGLISH)
+                    var i = 0
+                    val ld = LocalDate.of(
+                        dateMatch.groupValues[++i].toInt(),
+                        dateMatch.groupValues[++i].toInt(),
+                        dateMatch.groupValues[++i].toInt()
+                    )
+                    ld.format(formatter)
+                }
+                else it
+            }
             return Pair(year, date)
         }
 
