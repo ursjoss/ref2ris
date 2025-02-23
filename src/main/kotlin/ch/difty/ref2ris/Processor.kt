@@ -32,17 +32,17 @@ private fun resolveFiles(path: Path): Flow<Path> =
             .asFlow()
     else path.toFile().takeIf { it.isFile }?.let { flowOf(path) } ?: error("Unable to process file $path")
 
-@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 private fun Flow<Path>.processInto(outputPath: Path): Flow<Int> =
-    toTextLines()
-        .toRawReference()
-        .toRisRecord { it.toRisRecord() }
+    readTextLines()
+        .tokenized()
+        .toRisRecord()
         .unique()
         .toRisLines()
-        .writeCleanFileLineTo(outputPath)
+        .writeTo(outputPath)
 
-private fun Flow<TokenizedReference>.toRisRecord(f: (TokenizedReference) -> RisRecord): Flow<RisRecord> = flow {
-    collect { rawReference -> emit(f(rawReference)) }
+private fun Flow<TokenizedReference>.toRisRecord(): Flow<RisRecord> = flow {
+    collect { tr -> emit(tr.asRisRecord()) }
 }
 
 private fun Flow<RisRecord>.unique(): Flow<RisRecord> = flow {
@@ -53,7 +53,7 @@ private fun Flow<RisRecord>.unique(): Flow<RisRecord> = flow {
 }
 
 @ExperimentalCoroutinesApi
-private fun Flow<String>.writeCleanFileLineTo(outputPath: Path): Flow<Int> =
+private fun Flow<String>.writeTo(outputPath: Path): Flow<Int> =
     flow {
         var lines = 0
         openCleanWriter(outputPath.absolutePathString()).use { writer ->

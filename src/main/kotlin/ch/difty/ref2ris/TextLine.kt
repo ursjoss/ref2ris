@@ -20,9 +20,9 @@ private val log = KotlinLogging.logger {}
 /** data class for a single relevant line of text from the parsed file */
 data class TextLine(val line: String, val fileName: String = "")
 
-@FlowPreview
 @ExperimentalCoroutinesApi
-internal fun Flow<Path>.toTextLines(): Flow<TextLine> =
+@FlowPreview
+internal fun Flow<Path>.readTextLines(): Flow<TextLine> =
     flatMapConcat { filePath ->
         log.info { "Processing file ${filePath.fileName}..." }
         filePath.lineFlow(Charset.defaultCharset())

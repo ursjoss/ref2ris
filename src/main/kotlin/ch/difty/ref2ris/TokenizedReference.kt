@@ -72,13 +72,13 @@ internal data class TokenizedReference(
     }
 }
 
-internal fun Flow<TextLine>.toRawReference(): Flow<TokenizedReference> = flow {
+internal fun Flow<TextLine>.tokenized(): Flow<TokenizedReference> = flow {
     collect { textLine ->
         emit(TokenizedReference.fromTextLine(textLine))
     }
 }
 
-internal fun TokenizedReference.toRisRecord(): RisRecord {
+internal fun TokenizedReference.asRisRecord(): RisRecord {
     val rr = this
     val allAuthors = rr.authors.dropLast(1).replace(" & ", " ").split("., ").map { "$it." }
     return RisRecord().apply {
