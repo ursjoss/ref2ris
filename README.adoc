@@ -1,5 +1,5 @@
 image:https://img.shields.io/github/license/ursjoss/ref2ris.svg[LICENSE, link=https://github.com/ursjoss/ref2ris/blob/main/LICENSE.adoc]
-image:https://github.com/ursjoss/ref2ris/workflows/Build/badge.svg?branch=main[Build Status, link=https://github.com/ursjoss/ref2ris/actions]
+image:https://github.com/ursjoss/ref2ris/workflows/build.yml/badge.svg?branch=main[Build Status, link=https://github.com/ursjoss/ref2ris/actions]
 
 == ref2ris
 
