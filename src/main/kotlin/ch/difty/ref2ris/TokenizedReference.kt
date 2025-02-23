@@ -14,7 +14,8 @@ internal data class TokenizedReference(
     val title: String,
     val journal: String,
     val volumeNumber: String?,
-    val articleNumber: String?,
+    val firstPage: String?,
+    val lastPage: String?,
     val doi: String?,
 ) {
 
@@ -25,10 +26,10 @@ internal data class TokenizedReference(
         fun fromTextLine(textLine: TextLine): TokenizedReference {
             val authors = textLine.authors()
             val (year, dateOrNull) = textLine.tokenizedYearAndDate(authors)
-            val (title, doiOrNull, journalWithVolumeAndArticleNumbers) =
+            val (title, doiOrNull, journalWithVolumeAndPages) =
                 textLine.titleAndJournalStringAndOptionalDoi()
-            val (journal, volumeNumberOrNull, articleNumberOrNull) =
-                tokenizeJournalFrom(journalWithVolumeAndArticleNumbers)
+            val (journal, volumeNumberOrNull, pagesOrNull) =
+                tokenizeJournalFrom(journalWithVolumeAndPages)
             return TokenizedReference(
                 textLine.line,
                 authors,
@@ -37,7 +38,8 @@ internal data class TokenizedReference(
                 title,
                 journal,
                 volumeNumberOrNull,
-                articleNumberOrNull,
+                pagesOrNull?.substringBefore('-'),
+                pagesOrNull?.takeIf{ it.contains('-')}?.substringAfter('-'),
                 doiOrNull,
             )
         }
@@ -62,12 +64,12 @@ internal data class TokenizedReference(
             return Triple(title, doiOrNull, journalWithVolumeNumberAndArticleNumber)
         }
 
-        private fun tokenizeJournalFrom(journalWithVolumeAndArticleNumbers: String): Triple<String, String?, String?> {
-            val journalParts = journalWithVolumeAndArticleNumbers.split(", ")
+        private fun tokenizeJournalFrom(journalWithVolumeAndPages: String): Triple<String, String?, String?> {
+            val journalParts = journalWithVolumeAndPages.split(", ")
             val journal = journalParts.first()
             val volumeNumber = journalParts.getOrNull(1)
-            val articleNumber = journalParts.getOrNull(2)
-            return Triple(journal, volumeNumber, articleNumber)
+            val pages = journalParts.getOrNull(2)
+            return Triple(journal, volumeNumber, pages)
         }
     }
 }
@@ -90,7 +92,8 @@ internal fun TokenizedReference.asRisRecord(): RisRecord {
         title = rr.title
         periodicalNameFullFormatJO = rr.journal
         volumeNumber = rr.volumeNumber
-        reviewedItem = rr.articleNumber
+        startPage = rr.firstPage
+        endPage = rr.lastPage
         doi = rr.doi
     }
 }

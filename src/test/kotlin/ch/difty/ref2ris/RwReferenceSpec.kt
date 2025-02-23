@@ -59,7 +59,8 @@ object RwReferenceSpec : FunSpec({
                 "and novel high-risk populations: A nationwide time-stratified case-crossover study"
             periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Environment"
             volumeNumber shouldBeEqualTo "345"
-            reviewedItem shouldBeEqualTo "121031"
+            startPage shouldBeEqualTo "121031"
+            endPage.shouldBeNull()
             doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.atmosenv.2025.121031"
         }
     }
@@ -83,7 +84,8 @@ object RwReferenceSpec : FunSpec({
                 "among Italian adolescents and young adults in the province of Brescia, Italy"
             periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Pollution Research"
             volumeNumber shouldBeEqualTo "16(2)"
-            reviewedItem shouldBeEqualTo "102391"
+            startPage shouldBeEqualTo "102391"
+            endPage.shouldBeNull()
             doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
         }
     }
@@ -103,7 +105,8 @@ object RwReferenceSpec : FunSpec({
                 "disease mortality in Qingdao city: A time-series investigation"
             periodicalNameFullFormatJO shouldBeEqualTo "PLoS One"
             volumeNumber shouldBeEqualTo "20(1)"
-            reviewedItem shouldBeEqualTo "e0318250"
+            startPage shouldBeEqualTo "e0318250"
+            endPage.shouldBeNull()
             doi shouldBeEqualTo "https://doi.org/10.1371/journal.pone.0318250"
         }
     }
@@ -122,8 +125,28 @@ object RwReferenceSpec : FunSpec({
                 "A nationwide study in Poland"
             periodicalNameFullFormatJO shouldBeEqualTo "Eur J Prev Cardiol"
             volumeNumber.shouldBeNull()
-            reviewedItem.shouldBeNull()
+            startPage.shouldBeNull()
+            endPage.shouldBeNull()
             doi shouldBeEqualTo "https://doi.org/10.1093/eurjpc/zwaf016"
+        }
+    }
+
+    test("5. with start and end page") {
+        val ref = "Aretz, B., Doblhammer, G., & Heneka, M. T. (2024, Dec). The role of leukocytes in cognitive " +
+            "impairment due to long-term exposure to fine particulate matter: A large population-based mediation " +
+            "analysis. Alzheimers Dement, 20(12), 8715-8727. https://doi.org/10.1002/alz.14320"
+        TokenizedReference.fromTextLine(TextLine(ref)).asRisRecord().run {
+            type shouldBe RisType.JOUR
+            authors shouldBeEqualTo listOf("Aretz, B.", "Doblhammer, G.", "Heneka, M. T.")
+            publicationYear shouldBeEqualTo "2024"
+            date shouldBeEqualTo "Dec"
+            title shouldBeEqualTo "The role of leukocytes in cognitive impairment due to long-term exposure " +
+                "to fine particulate matter: A large population-based mediation analysis"
+            periodicalNameFullFormatJO shouldBeEqualTo "Alzheimers Dement"
+            volumeNumber shouldBeEqualTo "20(12)"
+            startPage shouldBeEqualTo "8715"
+            endPage shouldBeEqualTo "8727"
+            doi shouldBeEqualTo "https://doi.org/10.1002/alz.14320"
         }
     }
 })
