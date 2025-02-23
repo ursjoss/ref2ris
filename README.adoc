@@ -2,7 +2,7 @@ image:https://img.shields.io/github/license/ursjoss/ref2ris.svg[LICENSE, link=ht
 image:https://github.com/ursjoss/ref2ris/actions/workflows/build.yml/badge.svg?branch=main[Build Status, link=https://github.com/ursjoss/ref2ris/actions]
 image:https://github.com/ursjoss/ref2ris/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main[CodeQL, link=https://github.com/ursjoss/ref2ris/actions/workflows/github-code-scanning/codeql]
 
-== ref2ris
+== ref2ris - Reference to RIS
 
 ref2ris is a small utility program to convert sciref2risentific references exported from Endnote to RIS format.
 The RIS file can be reimported into Endnote.
