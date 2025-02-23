@@ -17,3 +17,57 @@ Place the text files with the citations in the `data` folder
 ----
 just run data output.ris
 ----
+
+=== Example
+
+[source]
+----
+Zhang, S., Breitner, S., Stafoggia, M., Donato, F. d., Samoli, E., Zafeiratou, S., Katsouyanni, K., Rao, S., Diz-Lois Palomares, A., Gasparrini, A., Masselot, P., Nikolaou, N., Aunan, K., Peters, A., & Schneider, A. (2024, 2024/12/15/). Effect modification of air pollution on the association between heat and mortality in five European countries. Environmental Research, 263, 120023. https://doi.org/https://doi.org/10.1016/j.envres.2024.120023
+Aretz, B., Doblhammer, G., & Heneka, M. T. (2024, Dec). The role of leukocytes in cognitive impairment due to long-term exposure to fine particulate matter: A large population-based mediation analysis. Alzheimers Dement, 20(12), 8715-8727. https://doi.org/10.1002/alz.14320
+----
+
+[result]
+----
+TY  - JOUR
+AU  - Zhang, S.
+AU  - Breitner, S.
+AU  - Stafoggia, M.
+AU  - Donato, F. d.
+AU  - Samoli, E.
+AU  - Zafeiratou, S.
+AU  - Katsouyanni, K.
+AU  - Rao, S.
+AU  - Diz-Lois Palomares, A.
+AU  - Gasparrini, A.
+AU  - Masselot, P.
+AU  - Nikolaou, N.
+AU  - Aunan, K.
+AU  - Peters, A.
+AU  - Schneider, A.
+DA  - Dec 15
+DO  - 10.1016/j.envres.2024.120023
+IS  - 263
+JO  - Environmental Research
+PY  - 2024
+SP  - 120023
+TI  - Effect modification of air pollution on the association between heat and mortality in five European countries
+U1  - Zhang, S., Breitner, S., Stafoggia, M., Donato, F. d., Samoli, E., Zafeiratou, S., Katsouyanni, K., Rao, S., Diz-Lois Palomares, A., Gasparrini, A., Masselot, P., Nikolaou, N., Aunan, K., Peters, A., & Schneider, A. (2024, 2024/12/15/). Effect modification of air pollution on the association between heat and mortality in five European countries. Environmental Research, 263, 120023. https://doi.org/https://doi.org/10.1016/j.envres.2024.120023
+VL  - 263
+ER  -
+
+TY  - JOUR
+AU  - Aretz, B.
+AU  - Doblhammer, G.
+AU  - Heneka, M. T.
+DA  - Dec
+DO  - 10.1002/alz.14320
+EP  - 8727
+IS  - 12
+JO  - Alzheimers Dement
+PY  - 2024
+SP  - 8715
+TI  - The role of leukocytes in cognitive impairment due to long-term exposure to fine particulate matter: A large population-based mediation analysis
+U1  - Aretz, B., Doblhammer, G., & Heneka, M. T. (2024, Dec). The role of leukocytes in cognitive impairment due to long-term exposure to fine particulate matter: A large population-based mediation analysis. Alzheimers Dement, 20(12), 8715-8727. https://doi.org/10.1002/alz.14320
+VL  - 20
+ER  - 
+----
