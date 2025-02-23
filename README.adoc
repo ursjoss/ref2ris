@@ -19,6 +19,12 @@ Place the text files with the citations in the `data` folder
 just run data output.ris
 ----
 
+[console]
+.run the cli using gradle directly
+----
+./gradlew :run --console plain --args="--input=data --output=output.ris"
+----
+
 === Example
 
 [source]
