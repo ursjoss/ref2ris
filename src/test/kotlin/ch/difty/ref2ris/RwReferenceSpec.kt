@@ -83,7 +83,8 @@ object RwReferenceSpec : FunSpec({
             title shouldBeEqualTo "Association between environmental air pollution and olfactory functioning " +
                 "among Italian adolescents and young adults in the province of Brescia, Italy"
             periodicalNameFullFormatJO shouldBeEqualTo "Atmospheric Pollution Research"
-            volumeNumber shouldBeEqualTo "16(2)"
+            volumeNumber shouldBeEqualTo "16"
+            issue shouldBeEqualTo "2"
             startPage shouldBeEqualTo "102391"
             endPage.shouldBeNull()
             doi shouldBeEqualTo "https://doi.org/https://doi.org/10.1016/j.apr.2024.102391"
@@ -104,7 +105,8 @@ object RwReferenceSpec : FunSpec({
             title shouldBeEqualTo "Short-term effects of combined environmental factors on respiratory " +
                 "disease mortality in Qingdao city: A time-series investigation"
             periodicalNameFullFormatJO shouldBeEqualTo "PLoS One"
-            volumeNumber shouldBeEqualTo "20(1)"
+            volumeNumber shouldBeEqualTo "20"
+            issue shouldBeEqualTo "1"
             startPage shouldBeEqualTo "e0318250"
             endPage.shouldBeNull()
             doi shouldBeEqualTo "https://doi.org/10.1371/journal.pone.0318250"
@@ -143,7 +145,8 @@ object RwReferenceSpec : FunSpec({
             title shouldBeEqualTo "The role of leukocytes in cognitive impairment due to long-term exposure " +
                 "to fine particulate matter: A large population-based mediation analysis"
             periodicalNameFullFormatJO shouldBeEqualTo "Alzheimers Dement"
-            volumeNumber shouldBeEqualTo "20(12)"
+            volumeNumber shouldBeEqualTo "20"
+            issue shouldBeEqualTo "12"
             startPage shouldBeEqualTo "8715"
             endPage shouldBeEqualTo "8727"
             doi shouldBeEqualTo "https://doi.org/10.1002/alz.14320"

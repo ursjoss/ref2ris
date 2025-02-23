@@ -17,6 +17,7 @@ internal data class TokenizedReference(
     val title: String,
     val journal: String,
     val volumeNumber: String?,
+    val issue: String?,
     val firstPage: String?,
     val lastPage: String?,
     val doi: String?,
@@ -32,18 +33,18 @@ internal data class TokenizedReference(
             val (year, dateOrNull) = textLine.tokenizedYearAndDate(authors)
             val (title, doiOrNull, journalWithVolumeAndPages) =
                 textLine.titleAndJournalStringAndOptionalDoi()
-            val (journal, volumeNumberOrNull, pagesOrNull) =
-                tokenizeJournalFrom(journalWithVolumeAndPages)
+            val jt = tokenizeJournalFrom(journalWithVolumeAndPages)
             return TokenizedReference(
                 textLine.line,
                 authors,
                 year,
                 dateOrNull,
                 title,
-                journal,
-                volumeNumberOrNull,
-                pagesOrNull?.substringBefore('-'),
-                pagesOrNull?.takeIf{ it.contains('-')}?.substringAfter('-'),
+                jt.journal,
+                jt.volume,
+                jt.issue,
+                jt.firstPage,
+                jt.lastPage,
                 doiOrNull,
             )
         }
@@ -81,13 +82,28 @@ internal data class TokenizedReference(
             return Triple(title, doiOrNull, journalWithVolumeNumberAndArticleNumber)
         }
 
-        private fun tokenizeJournalFrom(journalWithVolumeAndPages: String): Triple<String, String?, String?> {
+        private fun tokenizeJournalFrom(journalWithVolumeAndPages: String): JournalToken {
             val journalParts = journalWithVolumeAndPages.split(", ")
             val journal = journalParts.first()
-            val volumeNumber = journalParts.getOrNull(1)
+            val volume = journalParts.getOrNull(1)?.substringBefore('(')
+            val issue = journalParts.getOrNull(1)?.substringAfter("(")?.substringBefore(")")
             val pages = journalParts.getOrNull(2)
-            return Triple(journal, volumeNumber, pages)
+            return JournalToken(
+                journal,
+                volume,
+                issue,
+                pages?.substringBefore('-'),
+                pages?.takeIf{ it.contains('-')}?.substringAfter('-'),
+            )
         }
+
+        private data class JournalToken(
+            val journal: String,
+            val volume: String?,
+            val issue: String?,
+            val firstPage: String?,
+            val lastPage: String?,
+        )
     }
 }
 
@@ -109,6 +125,7 @@ internal fun TokenizedReference.asRisRecord(): RisRecord {
         title = rr.title
         periodicalNameFullFormatJO = rr.journal
         volumeNumber = rr.volumeNumber
+        issue = rr.issue
         startPage = rr.firstPage
         endPage = rr.lastPage
         doi = rr.doi
