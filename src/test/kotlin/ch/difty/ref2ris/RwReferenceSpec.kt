@@ -3,6 +3,7 @@ package ch.difty.ref2ris
 import ch.difty.kris.domain.RisType
 import io.kotest.core.spec.style.FunSpec
 import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainAll
@@ -30,7 +31,7 @@ object RwReferenceSpec : FunSpec({
             type shouldBe RisType.JOUR
             userDefinable1 shouldBeEqualTo ref
             authors shouldContainAll listOf("Zhu, A.", "Kan, H.", "Shi, X.", "Zeng, Y.", "Ji, J. S.")
-            firstAuthors shouldContainAll listOf("Zhu, A.")
+            firstAuthors.shouldBeEmpty()
             publicationYear shouldBeEqualTo "2024"
             date shouldBeEqualTo "Dec 24"
             title shouldBeEqualTo "Black Carbon Air Pollution and Incident Mortality among the Advance-Aged " +
@@ -52,7 +53,6 @@ object RwReferenceSpec : FunSpec({
             authors shouldContainAll listOf("Ahn, S.", "Yun, H.", "Oh, J.", "Kim, S.", "Jang, H.",
                 "Kim, Y.", "Kang, C.", "Ahn, S.", "Kim, A.", "Kwon, D.", "Park, J.", "Song, I.",
                 "Moon, J.", "Kim, E.", "Min, J.", "Kim, H.", "Lee, W.")
-            firstAuthors shouldContainAll listOf("Ahn, S.")
             publicationYear shouldBeEqualTo "2025"
             date shouldBeEqualTo "2025/03/05/"
             title shouldBeEqualTo "Short-term exposure to warm-season ozone, cardiovascular mortality, " +
@@ -77,7 +77,6 @@ object RwReferenceSpec : FunSpec({
                 "Smith, D. R.", "Patrono, A.", "Cagna, G.", "Invernizzi, A.", "Rechtman, E.", "Ongaro, E.",
                 "De Angelis, E.", "Calza, S.", "Rota, M.", "Wright, R. O.", "Claus Henn, B.", "Horton, M. K.",
                 "Placidi, D.")
-            firstAuthors shouldContainAll listOf("Renzetti, S.")
             publicationYear shouldBeEqualTo "2025"
             date shouldBeEqualTo "2025/02/01/"
             title shouldBeEqualTo "Association between environmental air pollution and olfactory functioning " +
@@ -98,7 +97,6 @@ object RwReferenceSpec : FunSpec({
             type shouldBe RisType.JOUR
             authors shouldBeEqualTo listOf("Zhang, X.", "Xi, Z.", "Yang, M.", "Zhang, X.", "Wu, R.", "Li, S.",
                 "Pan, L.", "Fang, Y.", "Lv, P.", "Ma, Y.", "Duan, H.", "Wang, B.", "Lv, K.")
-            firstAuthors shouldContainAll listOf("Zhang, X.")
             publicationYear shouldBeEqualTo "2025"
             date.shouldBeNull()
             title shouldBeEqualTo "Short-term effects of combined environmental factors on respiratory " +
@@ -118,7 +116,6 @@ object RwReferenceSpec : FunSpec({
             type shouldBe RisType.JOUR
             authors shouldBeEqualTo listOf("Kurasz, A.", "Lip, G. Y. H.", "Święczkowski, M.", "Tomaszuk-Kazberuk, A.",
                 "Dobrzycki, S.", "Kuźma, Ł.")
-            firstAuthors shouldContainAll listOf("Kurasz, A.")
             publicationYear shouldBeEqualTo "2025"
             date shouldBeEqualTo "Jan 15"
             title shouldBeEqualTo "Air quality and the risk of acute atrial fibrillation (EP-PARTICLES study): " +

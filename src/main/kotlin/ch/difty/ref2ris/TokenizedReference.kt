@@ -85,7 +85,6 @@ internal fun TokenizedReference.asRisRecord(): RisRecord {
         type = RisType.JOUR
         userDefinable1 = rr.textLine
         authors.addAll(allAuthors)
-        firstAuthors.add(allAuthors.first())
         publicationYear = rr.publicationYear
         date = rr.date
         title = rr.title
