@@ -1,6 +1,6 @@
 image:https://img.shields.io/github/license/ursjoss/ref2ris.svg[LICENSE, link=https://github.com/ursjoss/ref2ris/blob/main/LICENSE.adoc]
 image:https://github.com/ursjoss/ref2ris/actions/workflows/build.yml/badge.svg?branch=main[Build Status, link=https://github.com/ursjoss/ref2ris/actions]
-image:https://github.com/ursjoss/ref2ris/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main&event=push[CodeQL, link=https://github.com/ursjoss/ref2ris/actions/workflows/github-code-scanning/codeql]
+image:https://github.com/ursjoss/ref2ris/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main[CodeQL, link=https://github.com/ursjoss/ref2ris/actions/workflows/github-code-scanning/codeql]
 
 == ref2ris
 
