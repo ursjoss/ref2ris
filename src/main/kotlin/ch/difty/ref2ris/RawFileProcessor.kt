@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.toSet
 import java.io.BufferedWriter
 import java.nio.charset.Charset
 import java.nio.file.Files
@@ -32,24 +31,11 @@ internal enum class RawFiles : RawFileProcessor {
             toTextLines()
                 .toRawReference()
                 .toRisRecord { it.toRisRecord() }
-                .toSet().toList().asFlow()
+                .unique()
                 .toRisLines()
                 .writeCleanFileLineTo(outputPath)
 
     },
-}
-
-@Suppress("unused")
-@ExperimentalCoroutinesApi
-internal fun Flow<String>.printToConsole(): Flow<Int> = flow {
-    var lineCount = 0
-    println()
-    collect { risLine ->
-        print(risLine.toString())
-        lineCount++
-    }
-    emit(lineCount)
-    println()
 }
 
 /**
@@ -59,7 +45,10 @@ internal fun Flow<String>.printToConsole(): Flow<Int> = flow {
 internal suspend fun RawFileProcessor.processAllLines(inputPath: Path, outputPath: Path): ProcessorResult {
     fun resolveFiles(path: Path): Flow<Path> =
         if (path.toFile().isDirectory)
-            path.toFile().walk().filter { it.isFile }.map { it.toPath() }.asFlow()
+            path.toFile().listFiles()
+                .filter { it.isFile }
+                .map { it.toPath() }
+                .asFlow()
         else path
             .filterNot {
                 it.toFile().isDirectory
@@ -69,8 +58,15 @@ internal suspend fun RawFileProcessor.processAllLines(inputPath: Path, outputPat
         .processResult()
 }
 
-internal fun Flow<RawReference>.toRisRecord(f: (RawReference) -> RisRecord): Flow<RisRecord> = flow {
+private fun Flow<RawReference>.toRisRecord(f: (RawReference) -> RisRecord): Flow<RisRecord> = flow {
     collect { rawReference -> emit(f(rawReference)) }
+}
+
+private fun Flow<RisRecord>.unique(): Flow<RisRecord> = flow {
+    val set = mutableSetOf<RisRecord>()
+    collect { risRecord ->
+        if (set.add(risRecord)) emit(risRecord)
+    }
 }
 
 @ExperimentalCoroutinesApi

@@ -8,4 +8,4 @@ out/
 !/data/preprocess.sh
 /data/
 data/
-output.ris
+output*.ris
