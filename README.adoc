@@ -3,10 +3,11 @@ image:https://github.com/ursjoss/ref2ris/workflows/Build/badge.svg?branch=main[B
 
 == ref2ris
 
-ref2ris is a small utilty program to convert scientific references from PubMed to RIS format.
+ref2ris is a small utility program to convert scientific references exported from Endnote to RIS format.
+The RIS file can be reimported into Endnote.
 
 The motivation came from assisting someone who lost several months of collected data in Endnote.
-The data was available in emails, but only in a scitation format that could not be imported into Endnote directly.
+The data was available in emails, but only in a citation format that could not be imported into Endnote directly.
 
 To run:
 
