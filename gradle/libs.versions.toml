@@ -1,6 +1,6 @@
 [versions]
 detekt = "1.23.8"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 
 [libraries]
 kris = { module = "ch.difty.kris:kris-core", version = "0.5.12" }
