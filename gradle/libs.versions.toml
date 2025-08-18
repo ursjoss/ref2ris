@@ -10,7 +10,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.17" }
 mockk = { module = "io.mockk:mockk", version = "1.14.5" }
 kluent = { module = "org.amshove.kluent:kluent", version = "1.73" }
-kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version = "5.9.1" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version = "6.0.0" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
