@@ -6,10 +6,6 @@ plugins {
     application
 }
 
-repositories {
-    mavenCentral()
-}
-
 kotlin {
     jvmToolchain(JavaVersion.VERSION_21.majorVersion.toInt())
 }
