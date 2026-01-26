@@ -8,7 +8,7 @@ clikt = { module = "com.github.ajalt.clikt:clikt", version = "5.1.0" }
 kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "7.0.14" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.2" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version = "2.0.17" }
-mockk = { module = "io.mockk:mockk", version = "1.14.7" }
+mockk = { module = "io.mockk:mockk", version = "1.14.9" }
 kluent = { module = "org.amshove.kluent:kluent", version = "1.73" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version = "6.1.1" }
 
